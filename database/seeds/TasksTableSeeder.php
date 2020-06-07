@@ -10,6 +10,6 @@ class TasksTableSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        factory(Tasks::class, 5)->create();
+        factory(Tasks::class, 35)->create();
     }
 }
