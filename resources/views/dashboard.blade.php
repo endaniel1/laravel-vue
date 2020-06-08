@@ -8,7 +8,9 @@
 		<hr>
 	</div>
 	<div class="col-sm-7">
-		<a href="#" class="btn btn-primary pull-right"> Nueva Tarea</a>
+		<a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#create"> 
+			Nueva Tarea
+		</a>
 		<table class="table table-hover table-striped">
 			<thead>
 				<tr>
@@ -24,7 +26,7 @@
 					<td width="10px">@{{ keep.id }}</td>
 					<td> @{{ keep.keep }}</td>
 					<td width="10px">
-						<a href="#" class="btn btn-warning btn-sm">
+						<a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editkeep(keep)">
 							Editar
 						</a>
 					</td>
@@ -36,6 +38,8 @@
 				</tr>
 			</tbody>
 		</table>
+		@include("create")
+		@include("edit")
 	</div>
 	<div class="col-sm-5">
 		<pre>

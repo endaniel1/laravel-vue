@@ -16544,7 +16544,10 @@ return /******/ (function(modules) { // webpackBootstrap
     	this.getKeeps();
     },
     data:{
-    	keeps:[]
+    	keeps:[],
+    	newKeep:"",
+    	errors:[],
+    	fillKeep:{"id":"","keep":""}
     },
     methods:{
     	getKeeps:function(){
@@ -16559,6 +16562,29 @@ return /******/ (function(modules) { // webpackBootstrap
     			this.getKeeps();//Aqui cargamos los registros
     			toastr.success("Eliminado Correctamente");//Aqui mensaje
     		});
+    	},
+    	createKeep:function(){
+    		var url="tasks";
+    		axios.post(url,{//metodo de creacion(creamos y pasamos los datos)
+    			keep:this.newKeep//aqui cargamos la variable con los datos del formulario
+    		}).then(response=>{//ejecutamos la peticion
+    			this.getKeeps();//Aqui cargamos o listmos los registros
+    			this.newKeep="";//limpiamos el formulario O la variable asociada a ella
+    			this.errors=[];//eliminamos los errores
+    			$("#create").modal("hide");//ocultamos la model
+    			toastr.success("Nueva Tarea Creada Correctamente");//mostramos el mensaje de exito
+    		}).catch(error=>{
+    			this.errors=error.response.data;//Aqui cargamos los datos de errores q nos trae la respuesta
+    		});
+    	},
+    	editkeep:function(keep){
+    		this.fillKeep.id=keep.id;
+    		this.fillKeep.keep=keep.keep;
+    		$("#edit").modal("show");
+    	},
+    	updateKeep:function(id){
+    		alert("envio de taso");
     	}
+
     }
 });
