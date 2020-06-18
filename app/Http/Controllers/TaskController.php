@@ -11,9 +11,20 @@ class TaskController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $tasks = Tasks::orderBy("id", "DESC")->get();
-        return $tasks;
+    public function index(Request $request) {
+        $tasks = Tasks::orderBy("id", "ASC")->paginate(4);
+
+        return [
+            "pagination" => [
+                "total"        => $tasks->total(), //total de registros
+                "current_page" => $tasks->currentPage(), //pagina actual
+                "per_page"     => $tasks->perPage(), //por pagina
+                "last_page"    => $tasks->lastPage(), //ultima pagina
+                "from"         => $tasks->firstItem(), //primer elemento
+                "to"           => $tasks->lastItem(), //ultimo elemento
+            ],
+            "tasks"      => $tasks,
+        ];
     }
 
     /**
@@ -40,7 +51,12 @@ class TaskController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $this->validate($request, [
+            "keep" => "required",
+        ]);
+        Tasks::find($id)->update($request->all());
+
+        return;
     }
 
     /**
